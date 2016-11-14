@@ -1,0 +1,2 @@
+homebridge-homeassistant
+homebridge-wemo

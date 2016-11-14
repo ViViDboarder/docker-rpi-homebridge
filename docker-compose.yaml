@@ -1,0 +1,6 @@
+homebridge:
+  build: .
+  net: host
+  volumes:
+    - ./config.json:/root/.homebridge/config.json
+    - ./plugins.txt:/root/.homebridge/plugins.txt
