@@ -1,5 +1,7 @@
 homebridge:
   build: .
+  ports:
+    - "51826:51826"
   net: host
   volumes:
     - ./config.json:/root/.homebridge/config.json
