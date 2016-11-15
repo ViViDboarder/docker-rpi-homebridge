@@ -37,4 +37,4 @@ make push   # pushes image to docker hub
 ```
 
 ## Issues?
-Feel free to report any issues you're having getting this to run here
+Feel free to report any issues you're having getting this to run on [Github](https://github.com/ViViDboarder/docker-rpi-homebridge/issues)
