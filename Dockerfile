@@ -15,6 +15,8 @@ RUN apt-get install -y --no-install-recommends \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get update && apt-get install iputils-ping 
+
 RUN npm install -g --unsafe-perm \
         homebridge \
         hap-nodejs \
