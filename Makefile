@@ -35,6 +35,7 @@ go: build
 		-v "$(shell pwd)/plugins.txt:/root/.homebridge/plugins.txt" \
 		-v "$(shell pwd)/persist:/root/.homebridge/persist" \
 		--name homebridge \
+		--restart=always \
 		rpi-homebridge-dev
 
 # Tags dev image so it can be pushed
