@@ -11,6 +11,7 @@ RUN apt-get update && \
         avahi-daemon \
         avahi-discover \
         build-essential \
+        iputils-ping \
         libavahi-compat-libdnssd-dev \
         libnss-mdns && \
         apt-get clean && \
