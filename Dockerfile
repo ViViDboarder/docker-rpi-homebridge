@@ -1,4 +1,4 @@
-FROM hypriot/rpi-node:7
+FROM hypriot/rpi-node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
 RUN [ "cross-build-start" ]
