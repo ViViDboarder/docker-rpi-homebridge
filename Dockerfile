@@ -17,26 +17,29 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm install -g --unsafe-perm \
-        homebridge \
-        hap-nodejs \
-        node-gyp && \
-    cd /usr/local/lib/node_modules/homebridge/ && \
-    npm install --unsafe-perm bignum && \
-    cd /usr/local/lib/node_modules/hap-nodejs/node_modules/mdns && \
-    node-gyp BUILDTYPE=Release rebuild
-
 RUN mkdir -p /var/run/dbus/
 
-USER root
-RUN mkdir -p /root/.homebridge
+# Can't run as non-root yet because avahi needs to be started by root
+# RUN useradd -ms /bin/bash -d /homebridge homebridge
+# USER homebridge
+
+RUN mkdir -p /$HOME/.homebridge
+VOLUME /$HOME/.homebridge
+
+WORKDIR /homebridge
+
+COPY package.json /homebridge/
+COPY npm-shrinkwrap.json /homebridge/
+RUN [ -s npm-shrinkwrap.json ] || rm npm-shrinkwrap.json
+
+RUN npm install
 
 RUN cross-build-end || true
 
 EXPOSE 5353 51826
-VOLUME /root/.homebridge
-WORKDIR /root/.homebridge
 
-ADD start.sh /root/.homebridge/start.sh
+COPY start.sh /homebridge/
 
-CMD /root/.homebridge/start.sh
+COPY plugins-sample.txt /homebridge/plugins.txt
+
+CMD /homebridge/start.sh

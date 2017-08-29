@@ -1,0 +1,10 @@
+{
+  "name": "docker-rpi-homebridge",
+  "version": "1.0.0",
+  "description": "Meta package for installing dependencies",
+  "dependencies": {
+      "homebridge": "0.4.33",
+      "hap-nodejs": "*",
+      "node-gyp": "*"
+  }
+}
