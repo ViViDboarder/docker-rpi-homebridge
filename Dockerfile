@@ -1,8 +1,6 @@
 FROM hypriot/rpi-node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
-RUN [ "cross-build-start" ]
-
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
@@ -11,6 +9,7 @@ RUN apt-get update && \
         avahi-daemon \
         avahi-discover \
         build-essential \
+	iputils-ping \
         libavahi-compat-libdnssd-dev \
         libnss-mdns && \
         apt-get clean && \
@@ -34,7 +33,6 @@ RUN mkdir -p /var/run/dbus/
 USER root
 RUN mkdir -p /root/.homebridge
 
-RUN [ "cross-build-end" ]
 
 EXPOSE 5353 51826
 VOLUME /root/.homebridge
