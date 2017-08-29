@@ -1,7 +1,8 @@
-FROM hypriot/rpi-node:8
+# FROM hypriot/rpi-node:8
+FROM node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
-RUN [ "cross-build-start" ]
+# RUN [ "cross-build-start" ]
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -16,26 +17,28 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm install -g --unsafe-perm \
-        homebridge \
-        hap-nodejs \
-        node-gyp && \
-    cd /usr/local/lib/node_modules/homebridge/ && \
-    npm install --unsafe-perm bignum && \
-    cd /usr/local/lib/node_modules/hap-nodejs/node_modules/mdns && \
-    node-gyp BUILDTYPE=Release rebuild
-
 RUN mkdir -p /var/run/dbus/
 
 USER root
-RUN mkdir -p /root/.homebridge
 
-RUN [ "cross-build-end" ]
+RUN mkdir -p /homebridge
+RUN mkdir -p /root/.homebridge
+VOLUME /root/.homebridge
+
+RUN mkdir -p /homebridge
+WORKDIR /homebridge
+
+COPY package.json /homebridge/
+COPY npm-shrinkwrap.json /homebridge/
+
+RUN npm install
+
+# RUN [ "cross-build-end" ]
 
 EXPOSE 5353 51826
-VOLUME /root/.homebridge
-WORKDIR /root/.homebridge
 
-ADD start.sh /root/.homebridge/start.sh
+COPY start.sh /homebridge/
 
-CMD /root/.homebridge/start.sh
+COPY plugins-sample.txt /homebridge/plugins.txt
+
+CMD /homebridge/start.sh
