@@ -28,7 +28,6 @@ shell: build
 
 # Target to buld and run in detached mode (continuously)
 go: build
-	make clean
 	docker run --net=host -d \
 		-p "51826:51826" \
 		-v "$(shell pwd)/config.json:/root/.homebridge/config.json" \

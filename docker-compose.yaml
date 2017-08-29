@@ -6,3 +6,4 @@ homebridge:
   volumes:
     - ./config.json:/root/.homebridge/config.json
     - ./plugins.txt:/root/.homebridge/plugins.txt
+    - ./persist:/root/.homebridge/persist

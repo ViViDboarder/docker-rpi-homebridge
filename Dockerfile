@@ -1,5 +1,4 @@
-FROM hypriot/rpi-node:7
-# FROM hypriot/rpi-node:6.9.1
+FROM hypriot/rpi-node:latest
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
 ENV LANG en_US.UTF-8
@@ -14,8 +13,10 @@ RUN apt-get install -y --no-install-recommends \
         libnss-mdns && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ 
+RUN apt-get update && apt-get install libpcap-dev iputils-ping
 
-RUN apt-get update && apt-get install iputils-ping 
+RUN npm config set unsafe-perm true
 
 RUN npm install -g --unsafe-perm \
         homebridge \
