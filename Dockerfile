@@ -1,11 +1,13 @@
-FROM hypriot/rpi-node:latest
+FROM hypriot/rpi-node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
+
+RUN [ "cross-build-start" ]
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
         avahi-daemon \
         avahi-discover \
         build-essential \
@@ -27,13 +29,14 @@ RUN npm install -g --unsafe-perm \
     cd /usr/local/lib/node_modules/hap-nodejs/node_modules/mdns && \
     node-gyp BUILDTYPE=Release rebuild
 
-EXPOSE 5353 51826
-
 RUN mkdir -p /var/run/dbus/
 
 USER root
-
 RUN mkdir -p /root/.homebridge
+
+RUN [ "cross-build-end" ]
+
+EXPOSE 5353 51826
 VOLUME /root/.homebridge
 WORKDIR /root/.homebridge
 
