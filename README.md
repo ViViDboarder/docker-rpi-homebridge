@@ -29,12 +29,35 @@ docker-compose up
 If you want a little more control, you can use any of the make targets:
 
 ```
-make build  # builds a new image
-make run    # builds and runs container using same parameters as compose
-make shell  # builds and runs an interractive container
-make tag    # tags image to be pushed to docker hub
-make push   # pushes image to docker hub
+make build          # builds a new image
+make run            # builds and runs container using same parameters as compose
+make shell          # builds and runs an interractive container
+make tag            # tags image to be pushed to docker hub
+make push           # pushes image to docker hub
+make unshrinkwrap   # clears npm-shrinkwrap.json so the next build will use latest
+make shrinkwrap     # generates npm-shrinkwrap.json to pin versions
+make arm            # modifies Dockerfile for building against arm
 ```
+
+## Multi-arch
+This project is capable of being compiled on arm or cross-built on an x86 machine. There is some trickiness involved in this, so here's the description broken down by platform. High level, the `cross-build-start` cannot be present when building on arm. When running the built image, a non-arm system needs to have `qemu-arm-static` mounted as a volume. The `Makefile` tries to automate this a bit.
+
+### arm (Raspberry Pi)
+The default is to support building on Docker Hub and not a Raspberry Pi. Unfortunately, `cross-build-start` will fail to run on an arm machine.
+
+To build or shrinkwrap, just add `arm` to your make command. Eg. `make arm build shrinkwrap`. This will modify the `Dockerfile` to comment out the cross-build commands. If contributing changes back upstream, do not commit this change!
+
+### Linux x86
+Building can be done by directly running `make build`. If you want to run image, you need to install `qemu qemu-user qemu-user-static`. After that you should be able to run `make shrinkwrap or make shell`.
+
+### macOS
+Docker for Mac actually supports running arm binaries. So that's cool! To make things simple, you should follow the arm instructions.
+
+## Development
+Follow the instructions above for how to run on your architechture. Also, be sure to not commit commented out `cross-build-*` lines as those are necessary for Docker Hub to build.
+
+### Bumping version numbers
+This is most easily done by updating `package.json` and then running `make unshrinkwrap shrinkwrap`. That should force a reinstallation of all node packages and then provide you with an updated `npm-shrinkwrap.json` file to commit.
 
 ## Issues?
 Feel free to report any issues you're having getting this to run on [Github](https://github.com/ViViDboarder/docker-rpi-homebridge/issues)
