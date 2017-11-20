@@ -8,7 +8,7 @@ service dbus start
 service avahi-daemon start
 
 # Install desired plugins
-cat /homebridge/plugins.txt | xargs npm install --unsafe-perm
+cat $HOME/.homebridge/plugins.txt | xargs npm install --unsafe-perm
 
 # Start service
 /homebridge/node_modules/.bin/homebridge

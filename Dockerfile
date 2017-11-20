@@ -19,13 +19,13 @@ RUN apt-get update && \
 
 RUN mkdir -p /var/run/dbus/
 
-USER root
+# Can't run as non-root yet because avahi needs to be started by root
+# RUN useradd -ms /bin/bash -d /homebridge homebridge
+# USER homebridge
 
-RUN mkdir -p /homebridge
-RUN mkdir -p /root/.homebridge
-VOLUME /root/.homebridge
+RUN mkdir -p /$HOME/.homebridge
+VOLUME /$HOME/.homebridge
 
-RUN mkdir -p /homebridge
 WORKDIR /homebridge
 
 COPY package.json /homebridge/
