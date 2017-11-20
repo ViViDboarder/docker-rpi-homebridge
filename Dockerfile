@@ -1,8 +1,7 @@
-# FROM hypriot/rpi-node:8
-FROM node:8
+FROM hypriot/rpi-node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
-# RUN [ "cross-build-start" ]
+RUN [ "cross-build-start" ]
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -33,7 +32,7 @@ COPY npm-shrinkwrap.json /homebridge/
 
 RUN npm install
 
-# RUN [ "cross-build-end" ]
+RUN [ "cross-build-end" ]
 
 EXPOSE 5353 51826
 
