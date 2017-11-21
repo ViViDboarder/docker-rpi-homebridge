@@ -1,7 +1,7 @@
 FROM hypriot/rpi-node:8
 MAINTAINER ViViDboarder <vividboarder@gmail.com>
 
-RUN cross-build-start || true
+RUN [ "cross-build-start" ]
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -34,7 +34,7 @@ RUN [ -s npm-shrinkwrap.json ] || rm npm-shrinkwrap.json
 
 RUN npm install
 
-RUN cross-build-end || true
+RUN [ "cross-build-end" ]
 
 EXPOSE 5353 51826
 
