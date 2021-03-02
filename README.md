@@ -1,6 +1,9 @@
 # docker-rpi-homebridge
 Docker image for running [Homebridge](https://github.com/nfarina/homebridge) on a Raspberry Pi
 
+# NO LONGER MAINTAINED
+This is no longer maintained. You probably want to check out [oznu/docker-homebridge](https://github.com/oznu/docker-homebridge)
+
 ## Homebridge
 Here is what the author has to say about Homebridge:
 
